@@ -1,0 +1,685 @@
+.req-page {
+  min-height: 100vh;
+  background: #f8f8f8;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.req-navbar {
+  background: #c0392b;
+  padding: 0 32px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.req-nav-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.req-brand {
+  color: white;
+  font-size: 22px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.req-nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.req-nav-links a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.req-nav-links a.active,
+.req-nav-links a:hover { color: white; }
+
+.req-nav-auth { display: flex; gap: 10px; }
+
+.req-signin {
+  color: white;
+  border: 2px solid white;
+  border-radius: 20px;
+  padding: 6px 16px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.req-register {
+  background: white;
+  color: #c0392b;
+  border-radius: 20px;
+  padding: 6px 16px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.req-dashboard-btn {
+  background: white;
+  color: #c0392b;
+  border-radius: 20px;
+  padding: 6px 16px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.req-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.req-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.req-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #c0392b;
+}
+
+.req-sub {
+  color: #888;
+  font-size: 15px;
+  margin-top: 4px;
+}
+
+.req-post-btn {
+  background: #c0392b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.req-post-btn:hover { background: #a93226; }
+
+.req-error {
+  background: #fde8e8;
+  color: #c0392b;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border-left: 4px solid #c0392b;
+}
+
+.req-success {
+  background: #e8f8e8;
+  color: #27ae60;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border-left: 4px solid #27ae60;
+}
+
+.req-form-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.req-form-card h3 {
+  color: #c0392b;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.req-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.req-form-field {
+  margin-bottom: 16px;
+}
+
+.req-form-field label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.req-form-field input,
+.req-form-field select,
+.req-form-field textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.req-form-field input:focus,
+.req-form-field select:focus,
+.req-form-field textarea:focus {
+  border-color: #c0392b;
+}
+
+.req-form-btns {
+  display: flex;
+  gap: 12px;
+}
+
+.req-submit-btn {
+  background: #c0392b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.req-submit-btn:hover { background: #a93226; }
+
+.req-cancel-btn {
+  background: #eee;
+  color: #555;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.req-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.req-filter-select,
+.req-filter-input {
+  padding: 10px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  background: white;
+  min-width: 150px;
+}
+
+.req-filter-select:focus,
+.req-filter-input:focus {
+  border-color: #c0392b;
+}
+
+.req-clear-btn {
+  background: #fff;
+  color: #c0392b;
+  border: 1.5px solid #c0392b;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.req-loading {
+  text-align: center;
+  padding: 60px;
+  color: #888;
+  font-size: 18px;
+}
+
+.req-empty {
+  text-align: center;
+  padding: 60px;
+  background: white;
+  border-radius: 12px;
+}
+
+.req-empty p:first-child { font-size: 48px; }
+.req-empty p:last-child  { color: #888; font-size: 18px; margin-top: 8px; }
+
+.req-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.req-card {
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.req-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(192,57,43,0.12);
+}
+
+.req-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.req-blood {
+  font-size: 36px;
+  font-weight: 800;
+  color: #c0392b;
+}
+
+.req-urgency {
+  color: white;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.req-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.req-city     { font-weight: 600; color: #333; font-size: 15px; }
+.req-details  { color: #555; font-size: 14px; line-height: 1.5; }
+.req-posted-by{ color: #666; font-size: 14px; }
+.req-phone    { color: #666; font-size: 14px; }
+.req-date     { color: #999; font-size: 13px; }
+
+.req-respond-btn {
+  display: block;
+  background: #c0392b;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  border-radius: 30px;
+  border: none;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.req-respond-btn:hover { background: #a93226; }
+
+@media (max-width: 768px) {
+  .req-header  { flex-direction: column; gap: 16px; align-items: flex-start; }
+  .req-filters { flex-direction: column; }
+  .req-form-row{ grid-template-columns: 1fr; }
+  .req-grid    { grid-template-columns: 1fr; }
+}
+/* ── Tabs ── */
+.req-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 24px;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.req-tab {
+  padding: 11px 24px;
+  border: none;
+  background: white;
+  color: #555;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.req-tab.active {
+  background: #c0392b;
+  color: white;
+}
+
+.req-tab:hover:not(.active) { background: #f5f5f5; }
+
+/* ── Card Actions ── */
+.req-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.req-responded-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.req-responded-badge {
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  display: block;
+}
+
+/* ── Chat Buttons ── */
+.req-chat-nav-btn {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 2px solid white;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.req-chat-nav-btn:hover { background: rgba(255,255,255,0.35); }
+
+.req-chat-btn {
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.req-chat-now-btn {
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s;
+}
+
+.req-chat-now-btn:hover { background: #219a52; }
+
+/* ── Responses Section ── */
+.req-responses-section {
+  background: #fafafa;
+  border-top: 2px solid #f0f0f0;
+  padding: 16px 20px;
+  margin-top: 12px;
+  border-radius: 0 0 12px 12px;
+}
+
+.req-responses-section h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 14px;
+}
+
+.req-no-responses {
+  color: #888;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+}
+
+.req-donor-response {
+  background: white;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid #eee;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.req-donor-info {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.req-donor-avatar {
+  width: 40px;
+  height: 40px;
+  background: #c0392b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.req-donor-name  { font-weight: 700; color: #222; font-size: 14px; }
+.req-donor-blood { color: #c0392b; font-size: 13px; font-weight: 600; }
+.req-donor-phone { color: #555; font-size: 13px; }
+.req-donor-city  { color: #777; font-size: 13px; }
+.req-donor-msg   { color: #888; font-size: 12px; font-style: italic; margin-top: 2px; }
+
+.req-donor-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+  flex-shrink: 0;
+  min-width: 130px;
+}
+
+.req-res-status {
+  color: white;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.req-accept-btn {
+  background: #e8f8e8;
+  color: #27ae60;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+}
+
+.req-accept-btn:hover { background: #d0f0d0; }
+
+.req-reject-btn {
+  background: #fde8e8;
+  color: #e74c3c;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+}
+
+.req-reject-btn:hover { background: #f5c0c0; }
+
+/* ── View Responses Button ── */
+.req-view-responses-btn {
+  background: #c0392b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s;
+}
+
+.req-view-responses-btn:hover { background: #a93226; }
+
+/* ── My Responses Section ── */
+.req-my-responses { margin-top: 8px; }
+
+.req-section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.req-responses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.req-my-response-item {
+  background: white;
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid #f0f0f0;
+}
+
+.req-my-res-left {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.req-blood-circle {
+  background: #c0392b;
+  color: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.req-my-res-city    { font-weight: 600; color: #333; font-size: 14px; }
+.req-my-res-detail  { color: #666; font-size: 13px; }
+.req-my-res-urgency { color: #888; font-size: 13px; }
+.req-my-res-date    { color: #bbb; font-size: 12px; }
+
+.req-my-res-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.req-accepted-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.req-accepted-msg {
+  color: #27ae60;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.req-contact-info {
+  color: #888;
+  font-size: 12px;
+}
+
+.req-rejected-msg {
+  color: #888;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ── My Request Card ── */
+.req-my-request-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.req-my-req-top {
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.req-my-req-left {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.req-req-status {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.req-req-status.open      { background: #e8f4fd; color: #2980b9; }
+.req-req-status.fulfilled { background: #e8f8e8; color: #27ae60; }
+.req-req-status.closed    { background: #f5f5f5; color: #888; }

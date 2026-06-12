@@ -1,0 +1,595 @@
+.fd-page {
+  min-height: 100vh;
+  background: #f8f8f8;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* ── Navbar ── */
+.fd-navbar {
+  background: #c0392b;
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.fd-nav-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.fd-brand {
+  color: white;
+  font-size: 22px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.fd-nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.fd-nav-links a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.fd-nav-links a.active,
+.fd-nav-links a:hover { color: white; }
+
+.fd-nav-auth { display: flex; gap: 10px; align-items: center; }
+
+.fd-signin {
+  color: white;
+  border: 2px solid white;
+  border-radius: 20px;
+  padding: 6px 16px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.fd-register,
+.fd-dashboard-btn {
+  background: white;
+  color: #c0392b;
+  border-radius: 20px;
+  padding: 6px 16px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ── Hero ── */
+.fd-hero {
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.fd-hero h1 {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.fd-hero p {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* ── Container ── */
+.fd-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+/* ── Filters Card ── */
+.fd-filters-card {
+  background: white;
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  margin-bottom: 20px;
+}
+
+.fd-filters {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+
+.fd-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 150px;
+}
+
+.fd-filter-group label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fd-filter-group select,
+.fd-filter-group input {
+  padding: 10px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  background: white;
+  transition: border 0.2s;
+}
+
+.fd-filter-group select:focus,
+.fd-filter-group input:focus {
+  border-color: #c0392b;
+}
+
+.fd-clear-btn {
+  background: white;
+  color: #c0392b;
+  border: 2px solid #c0392b;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.fd-clear-btn:hover {
+  background: #c0392b;
+  color: white;
+}
+
+/* ── View Toggle ── */
+.fd-view-toggle {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.fd-toggle-btn {
+  padding: 8px 18px;
+  border: 1.5px solid #ddd;
+  border-radius: 20px;
+  background: white;
+  color: #555;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.fd-toggle-btn.active {
+  background: #c0392b;
+  color: white;
+  border-color: #c0392b;
+}
+
+/* ── Blood Quick Filter ── */
+.fd-blood-quick {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.fd-blood-btn {
+  padding: 7px 16px;
+  border: 1.5px solid #ddd;
+  border-radius: 20px;
+  background: white;
+  color: #555;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.fd-blood-btn:hover { border-color: #c0392b; color: #c0392b; }
+
+.fd-blood-btn.active {
+  color: white;
+  border-color: transparent;
+}
+
+/* ── Stats Bar ── */
+.fd-stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.fd-stat-item {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.fd-stat-num {
+  display: block;
+  font-size: 26px;
+  font-weight: 800;
+  color: #c0392b;
+}
+
+.fd-stat-lbl {
+  display: block;
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* ── Map Section ── */
+.fd-map-section {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  margin-bottom: 24px;
+}
+
+.fd-map-controls {
+  padding: 16px 20px;
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.fd-loc-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #c0392b;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.fd-loc-btn:hover   { background: #a93226; }
+.fd-loc-btn.green   { background: #27ae60; }
+.fd-loc-btn.green:hover { background: #219a52; }
+
+.fd-map-wrap { height: 400px; }
+
+/* ── List Section ── */
+.fd-list-section { margin-top: 8px; }
+
+.fd-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.fd-list-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+}
+
+/* ── Loading / Empty ── */
+.fd-loading {
+  text-align: center;
+  padding: 60px;
+  background: white;
+  border-radius: 14px;
+  color: #888;
+}
+
+.fd-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f0f0f0;
+  border-top: 4px solid #c0392b;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.fd-empty {
+  text-align: center;
+  padding: 60px;
+  background: white;
+  border-radius: 14px;
+}
+
+.fd-empty p:first-child { font-size: 48px; }
+.fd-empty p:nth-child(2){ font-size: 18px; color: #555; margin: 8px 0 16px; }
+
+/* ── Donor Grid ── */
+.fd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* ── Donor Card ── */
+.fd-card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 2px solid transparent;
+}
+
+.fd-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.fd-card.available   { border-color: #e8f8e8; }
+.fd-card.unavailable { border-color: #f5f5f5; opacity: 0.85; }
+
+/* Card Head */
+.fd-card-head {
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.fd-blood-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.fd-card-title { flex: 1; }
+
+.fd-donor-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 3px;
+}
+
+.fd-donor-city {
+  font-size: 13px;
+  color: #888;
+}
+
+.fd-avail-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.fd-avail-badge.yes {
+  background: #e8f8e8;
+  color: #27ae60;
+}
+
+.fd-avail-badge.no {
+  background: #f5f5f5;
+  color: #999;
+}
+
+/* Card Body */
+.fd-card-body {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fd-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.fd-info-icon { font-size: 16px; flex-shrink: 0; }
+
+.fd-health-note {
+  font-size: 12px !important;
+  color: #888 !important;
+  font-style: italic;
+}
+
+/* Card Actions */
+.fd-card-actions {
+  padding: 12px 18px;
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.fd-call-btn {
+  flex: 1;
+  background: #c0392b;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.fd-call-btn:hover { background: #a93226; }
+
+.fd-chat-btn {
+  flex: 1;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.fd-chat-btn:hover { background: #219a52; }
+
+.fd-unavail-msg {
+  width: 100%;
+  text-align: center;
+  color: #aaa;
+  font-size: 13px;
+  padding: 8px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .fd-stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .fd-grid      { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+}
+
+@media (max-width: 600px) {
+  .fd-navbar    { padding: 0 16px; }
+  .fd-nav-links { display: none; }
+  .fd-hero h1   { font-size: 26px; }
+  .fd-stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .fd-grid      { grid-template-columns: 1fr; }
+  .fd-filters   { flex-direction: column; }
+}
+.fd-bookmark-btn {
+  flex: 1;
+  background: #f0f0f0;
+  color: #555;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.fd-bookmark-btn:hover   { background: #fde8e8; color: #c0392b; }
+.fd-bookmark-btn.bookmarked { background: #fde8e8; color: #c0392b; }
+
+/* ── Error Banner ── */
+.fd-error-banner {
+  background: #fde8e8;
+  color: #c0392b;
+  padding: 14px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border-left: 4px solid #c0392b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.fd-retry-btn {
+  background: #c0392b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ── List Header ── */
+.fd-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.fd-list-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+}
+
+.fd-refresh-btn {
+  background: white;
+  color: #c0392b;
+  border: 1.5px solid #c0392b;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.fd-refresh-btn:hover {
+  background: #c0392b;
+  color: white;
+}
+
+.fd-refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Bookmark Button ── */
+.fd-bookmark-btn {
+  background: #f5f5f5;
+  color: #555;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.fd-bookmark-btn:hover {
+  background: #fde8e8;
+  color: #c0392b;
+  border-color: #c0392b;
+}
+
+.fd-bookmark-btn.bookmarked {
+  background: #fde8e8;
+  color: #c0392b;
+  border-color: #c0392b;
+}

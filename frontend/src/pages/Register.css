@@ -1,0 +1,196 @@
+.reg-page {
+  min-height: 100vh;
+  background: #f8f8f8;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.reg-navbar {
+  background: #c0392b;
+  padding: 0 32px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.reg-nav-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reg-brand {
+  color: white;
+  font-size: 24px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.reg-nav-links {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.reg-nav-btn {
+  color: white;
+  border: 2px solid white;
+  border-radius: 20px;
+  padding: 6px 18px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.reg-nav-btn:hover {
+  background: white;
+  color: #c0392b;
+}
+
+.reg-nav-active {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 2px solid white;
+  padding-bottom: 2px;
+}
+
+.reg-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.reg-card {
+  background: white;
+  border-radius: 16px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.reg-icon { font-size: 48px; margin-bottom: 12px; }
+
+.reg-title {
+  color: #c0392b;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.reg-sub {
+  color: #888;
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+
+.reg-tabs {
+  display: flex;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.reg-tab {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: white;
+  color: #555;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reg-tab.active {
+  background: #c0392b;
+  color: white;
+}
+
+.reg-error {
+  background: #fde8e8;
+  color: #c0392b;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  border-left: 4px solid #c0392b;
+  text-align: left;
+}
+
+.reg-form { text-align: left; }
+
+.reg-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.reg-field {
+  margin-bottom: 16px;
+}
+
+.reg-field label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.reg-field input,
+.reg-field select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.2s;
+  box-sizing: border-box;
+  background: white;
+}
+
+.reg-field input:focus,
+.reg-field select:focus {
+  border-color: #c0392b;
+}
+
+.reg-btn {
+  width: 100%;
+  padding: 14px;
+  background: #c0392b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+.reg-btn:hover:not(:disabled) { background: #a93226; }
+.reg-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.reg-login-link {
+  margin-top: 24px;
+  font-size: 14px;
+  color: #666;
+}
+
+.reg-login-link a {
+  color: #c0392b;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 500px) {
+  .reg-card { padding: 32px 20px; }
+  .reg-row  { grid-template-columns: 1fr; }
+}
