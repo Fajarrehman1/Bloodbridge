@@ -2,7 +2,8 @@ const express = require('express');
 const router  = express.Router();
 const User    = require('../models/User');
 const jwt     = require('jsonwebtoken');
-const crypto  = require('crypto');
+const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
 
 const generateToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '7d' });
