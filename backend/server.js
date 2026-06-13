@@ -20,91 +20,96 @@ app.use(cors({
   ],
   credentials: true
 }));
+
 app.use(express.json());
 
 // ─── Test Route ───────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.json({ message: '🩸 BloodBridge API is running!' });
+});
+
 app.get('/test', (req, res) => {
   res.json({ message: 'Server is working!' });
 });
 
 // ─── Routes ───────────────────────────────────────────────
 try {
-  app.use('/api/auth',          require('./routes/authRoutes'));
+  app.use('/api/auth',         require('./routes/authRoutes'));
   console.log('✅ authRoutes loaded');
 } catch(e) { console.error('❌ authRoutes error:', e.message); }
 
 try {
-  app.use('/api/donors',        require('./routes/donorRoutes'));
+  app.use('/api/donors',       require('./routes/donorRoutes'));
   console.log('✅ donorRoutes loaded');
 } catch(e) { console.error('❌ donorRoutes error:', e.message); }
 
 try {
-  app.use('/api/blogs', require('./routes/blogRoutes'));
+  app.use('/api/blogs',        require('./routes/blogRoutes'));
   console.log('✅ blogRoutes loaded');
 } catch(e) { console.error('❌ blogRoutes error:', e.message); }
 
 try {
-  app.use('/api/requests',      require('./routes/requestRoutes'));
+  app.use('/api/requests',     require('./routes/requestRoutes'));
   console.log('✅ requestRoutes loaded');
 } catch(e) { console.error('❌ requestRoutes error:', e.message); }
 
 try {
-  app.use('/api/notifications', require('./routes/notificationRoutes'));
+  app.use('/api/notifications',require('./routes/notificationRoutes'));
   console.log('✅ notificationRoutes loaded');
 } catch(e) { console.error('❌ notificationRoutes error:', e.message); }
 
 try {
-  app.use('/api/bookmarks',     require('./routes/bookmarkRoutes'));
+  app.use('/api/bookmarks',    require('./routes/bookmarkRoutes'));
   console.log('✅ bookmarkRoutes loaded');
 } catch(e) { console.error('❌ bookmarkRoutes error:', e.message); }
 
 try {
-  app.use('/api/chat',          require('./routes/chatRoutes'));
+  app.use('/api/chat',         require('./routes/chatRoutes'));
   console.log('✅ chatRoutes loaded');
 } catch(e) { console.error('❌ chatRoutes error:', e.message); }
 
 try {
-  app.use('/api/admin',         require('./routes/adminRoutes'));
+  app.use('/api/admin',        require('./routes/adminRoutes'));
   console.log('✅ adminRoutes loaded');
 } catch(e) { console.error('❌ adminRoutes error:', e.message); }
 
 try {
-  app.use('/api/responses',     require('./routes/responseRoutes'));
+  app.use('/api/responses',    require('./routes/responseRoutes'));
   console.log('✅ responseRoutes loaded');
 } catch(e) { console.error('❌ responseRoutes error:', e.message); }
 
-// ─── Error Handler ────────────────────────────────────────
+try {
+  app.use('/api/leaderboard',  require('./routes/leaderboardRoutes'));
+  console.log('✅ leaderboardRoutes loaded');
+} catch(e) { console.error('❌ leaderboardRoutes error:', e.message); }
+
+try {
+  app.use('/api/reviews',      require('./routes/reviewRoutes'));
+  console.log('✅ reviewRoutes loaded');
+} catch(e) { console.error('❌ reviewRoutes error:', e.message); }
+
+// ─── Global Error Handler ─────────────────────────────────
 app.use((err, req, res, next) => {
   console.error('❌ Global Error:', err.message);
-  console.error(err.stack);
   res.status(500).json({ message: err.message });
 });
 
-// Find this in server.js and replace the entire io.on('connection') block:
-
+// ─── Socket.io ────────────────────────────────────────────
 const onlineUsers = new Map();
 
 io.on('connection', (socket) => {
   console.log('Socket connected:', socket.id);
 
-  // User comes online
   socket.on('user_online', (userId) => {
     onlineUsers.set(String(userId), socket.id);
     io.emit('online_users', Array.from(onlineUsers.keys()));
     console.log(`User online: ${userId}`);
   });
 
-  // Send message
   socket.on('send_message', async ({ senderId, receiverId, content }) => {
     try {
       const Message = require('./models/Message');
- 
-      try {
-  app.use('/api/leaderboard', require('./routes/leaderboardRoutes'));
-  console.log('✅ leaderboardRoutes loaded');
-} catch(e) { console.error('❌ leaderboardRoutes error:', e.message); } 
 
-      // Save to DB
       const message = await Message.create({
         sender:   senderId,
         receiver: receiverId,
@@ -115,7 +120,6 @@ io.on('connection', (socket) => {
         .populate('sender',   'name phone bloodGroup')
         .populate('receiver', 'name phone bloodGroup');
 
-      // Send to receiver if online
       const receiverSocket = onlineUsers.get(String(receiverId));
       if (receiverSocket) {
         io.to(receiverSocket).emit('receive_message', {
@@ -127,7 +131,6 @@ io.on('connection', (socket) => {
         });
       }
 
-      // Confirm to sender
       socket.emit('message_sent', {
         _id:       populated._id,
         sender:    populated.sender,
@@ -144,7 +147,6 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Typing
   socket.on('typing', ({ senderId, receiverId }) => {
     const receiverSocket = onlineUsers.get(String(receiverId));
     if (receiverSocket) {
@@ -152,7 +154,6 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Stop typing
   socket.on('stop_typing', ({ senderId, receiverId }) => {
     const receiverSocket = onlineUsers.get(String(receiverId));
     if (receiverSocket) {
@@ -160,7 +161,6 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Disconnect
   socket.on('disconnect', () => {
     onlineUsers.forEach((sid, userId) => {
       if (sid === socket.id) {
@@ -173,16 +173,13 @@ io.on('connection', (socket) => {
 });
 
 // ─── Start Server ─────────────────────────────────────────
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
 }).on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
     console.error(`❌ Port ${PORT} is busy!`);
-    console.log('💡 Run this command to fix:');
-    console.log('   taskkill /F /IM node.exe');
-    console.log('   Then run: npm start');
     process.exit(1);
   }
 });
