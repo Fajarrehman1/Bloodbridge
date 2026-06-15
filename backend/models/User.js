@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema({
   available:      { type: Boolean, default: true },
   healthNote:     { type: String },
   lastDonated:    { type: Date },
+  averageRating: { type: Number, default: 0 },
+  totalReviews:  { type: Number, default: 0 },
   resetOTP:       { type: String },
   resetOTPExpiry: { type: Date },
 }, { timestamps: true });
