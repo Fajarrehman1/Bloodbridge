@@ -16,6 +16,8 @@ const userSchema = new mongoose.Schema({
   totalReviews:  { type: Number, default: 0 },
   resetOTP:       { type: String },
   resetOTPExpiry: { type: Date },
+  donationPoints: { type: Number, default: 0 },
+  totalDonations: { type: Number, default: 0 },
 }, { timestamps: true });
 
 userSchema.pre('save', async function () {

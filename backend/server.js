@@ -88,6 +88,11 @@ try {
   console.log('✅ reviewRoutes loaded');
 } catch(e) { console.error('❌ reviewRoutes error:', e.message); }
 
+try {
+  app.use('/api/donations', require('./routes/donationRoutes'));
+  console.log('✅ donationRoutes loaded');
+} catch(e) { console.error('❌ donationRoutes error:', e.message); }
+
 // ─── Global Error Handler ─────────────────────────────────
 app.use((err, req, res, next) => {
   console.error('❌ Global Error:', err.message);

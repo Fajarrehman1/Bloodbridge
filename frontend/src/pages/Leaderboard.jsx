@@ -1,79 +1,73 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { getLeaderboard } from '../api/services';
+import { useNavigate }         from 'react-router-dom';
+import { useAuth }             from '../context/AuthContext';
+import { getLeaderboard }      from '../api/services';
 import './Leaderboard.css';
 
 const Leaderboard = () => {
-  const { user } = useAuth();
-  const navigate = useNavigate();
+  const { user }   = useAuth();
+  const navigate   = useNavigate();
 
-  const [donors, setDonors] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
+  const [donors,      setDonors]      = useState([]);
+  const [loading,     setLoading]     = useState(true);
+  const [filter,      setFilter]      = useState('all');
   const [bloodFilter, setBloodFilter] = useState('');
+  const [stats,       setStats]       = useState({});
+  const [error,       setError]       = useState('');
 
-  // Static fallback data
-  const staticDonors = [
-    { rank: 1, name: 'Ali Ahmed', bloodGroup: 'O+', donations: 15, points: 150, city: 'Lahore', achievement: 'Gold Donor', badge: '🥇', _id: '1' },
-    { rank: 2, name: 'Sara Khan', bloodGroup: 'A+', donations: 12, points: 120, city: 'Karachi', achievement: 'Gold Donor', badge: '🥈', _id: '2' },
-    { rank: 3, name: 'Usman Malik', bloodGroup: 'B-', donations: 10, points: 100, city: 'Islamabad', achievement: 'Certificate Earned', badge: '🥉', _id: '3' },
-    { rank: 4, name: 'Fatima Raza', bloodGroup: 'AB+', donations: 8, points: 80, city: 'Lahore', achievement: '', badge: '⭐', _id: '4' },
-    { rank: 5, name: 'Bilal Hassan', bloodGroup: 'O-', donations: 7, points: 70, city: 'Karachi', achievement: '', badge: '⭐', _id: '5' },
-    { rank: 6, name: 'Zara Ahmed', bloodGroup: 'A-', donations: 6, points: 60, city: 'Multan', achievement: '', badge: '⭐', _id: '6' },
-    { rank: 7, name: 'Hassan Ali', bloodGroup: 'B+', donations: 5, points: 50, city: 'Peshawar', achievement: '', badge: '⭐', _id: '7' },
-    { rank: 8, name: 'Ayesha Noor', bloodGroup: 'O+', donations: 4, points: 40, city: 'Lahore', achievement: '', badge: '⭐', _id: '8' },
-    { rank: 9, name: 'Omar Farooq', bloodGroup: 'AB-', donations: 3, points: 30, city: 'Karachi', achievement: '', badge: '⭐', _id: '9' },
-    { rank: 10, name: 'Hira Baig', bloodGroup: 'A+', donations: 2, points: 20, city: 'Islamabad', achievement: '', badge: '⭐', _id: '10' },
-  ];
-
-  const cities = ['all', 'Lahore', 'Karachi', 'Islamabad', 'Multan', 'Peshawar'];
+  const cities     = ['all','Lahore','Karachi','Islamabad','Multan','Peshawar'];
+  const BLOOD_GROUPS = ['A+','A-','B+','B-','AB+','AB-','O+','O-'];
 
   useEffect(() => {
     fetchLeaderboard();
-  }, []);
+  }, [bloodFilter, filter]);
 
   const fetchLeaderboard = async () => {
     try {
       setLoading(true);
-      const res = await getLeaderboard({});
-      const list = res.data?.leaderboard || [];
+      setError('');
 
-      if (list.length > 0) {
-        const mapped = list.map((d, i) => ({
-          rank: d.rank || i + 1,
-          name: d.name,
-          bloodGroup: d.bloodGroup,
-          donations: d.donations || 0,
-          points: d.points || 0,
-          city: d.city || '',
-          achievement: d.donations >= 10 ? 'Gold Donor' : d.donations >= 5 ? 'Regular Donor' : d.donations >= 1 ? 'Active Donor' : '',
-          badge: d.rank === 1 ? '🥇' : d.rank === 2 ? '🥈' : d.rank === 3 ? '🥉' : '⭐',
-          _id: d._id || ''
-        }));
-        setDonors(mapped);
-      } else {
-        setDonors(staticDonors);
-      }
+      const params = {};
+      if (bloodFilter)      params.bloodGroup = bloodFilter;
+      if (filter !== 'all') params.city       = filter;
+
+      const res  = await getLeaderboard(params);
+      const data = res.data;
+
+      console.log('Leaderboard data:', data);
+
+      const list = data?.leaderboard || [];
+
+      const mapped = list.map((d, i) => ({
+        rank:        d.rank        || i + 1,
+        _id:         d._id,
+        name:        d.name,
+        bloodGroup:  d.bloodGroup,
+        city:        d.city        || '',
+        donations:   d.donations   || 0,
+        points:      d.points      || 0,
+        level:       d.level,
+        achievement: d.achievement || '',
+        badge:       i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '⭐',
+        available:   d.available
+      }));
+
+      setDonors(mapped);
+      setStats(data?.stats || {});
       setLoading(false);
     } catch (err) {
-      setDonors(staticDonors);
+      console.error('Leaderboard fetch error:', err);
+      setError('Failed to load leaderboard');
       setLoading(false);
     }
   };
 
-  const filtered = donors.filter(d => {
-    const matchCity = filter === 'all' || d.city === filter;
-    const matchBlood = !bloodFilter || d.bloodGroup === bloodFilter;
-    return matchCity && matchBlood;
-  });
-
-  const top3 = filtered.slice(0, 3);
+  const top3 = donors.slice(0, 3);
 
   return (
     <div className="lb-page">
 
-      {/* Navbar */}
+      {/* ── Navbar ── */}
       <header className="lb-navbar">
         <div className="lb-nav-inner">
           <a href="/" className="lb-brand">🩸 BloodBridge</a>
@@ -87,7 +81,7 @@ const Leaderboard = () => {
             {user ? (
               <a
                 href={
-                  user.role === 'donor' ? '/donor/dashboard' :
+                  user.role === 'donor'    ? '/donor/dashboard'    :
                   user.role === 'receiver' ? '/receiver/dashboard' :
                   '/admin/dashboard'
                 }
@@ -97,7 +91,7 @@ const Leaderboard = () => {
               </a>
             ) : (
               <>
-                <a href="/login" className="lb-signin">Sign In</a>
+                <a href="/login"    className="lb-signin">Sign In</a>
                 <a href="/register" className="lb-register">Register</a>
               </>
             )}
@@ -105,7 +99,7 @@ const Leaderboard = () => {
         </div>
       </header>
 
-      {/* Hero */}
+      {/* ── Hero ── */}
       <div className="lb-hero">
         <h1>🏆 Leaderboard</h1>
         <p>Celebrating our top blood donors who save lives every day</p>
@@ -113,56 +107,54 @@ const Leaderboard = () => {
 
       <div className="lb-container">
 
-        {/* Podium Top 3 */}
-        {!loading && top3.length >= 3 && (
+        {/* ── Podium Top 3 ── */}
+        {!loading && top3.length >= 2 && (
           <div className="lb-podium">
-
             {/* 2nd Place */}
-            <div className="lb-podium-item second">
-              <div className="lb-podium-badge">🥈</div>
-              <div className="lb-podium-avatar">
-                {top3[1]?.name?.charAt(0)}
+            {top3[1] && (
+              <div className="lb-podium-item second">
+                <div className="lb-podium-badge">🥈</div>
+                <div className="lb-podium-avatar">{top3[1].name?.charAt(0)}</div>
+                <p className="lb-podium-name">{top3[1].name}</p>
+                <p className="lb-podium-blood">{top3[1].bloodGroup}</p>
+                <p className="lb-podium-city">📍 {top3[1].city}</p>
+                <p className="lb-podium-donations">{top3[1].donations} donations</p>
+                <p className="lb-podium-pts">{top3[1].points} pts</p>
+                <div className="lb-podium-stand second-stand">2nd</div>
               </div>
-              <p className="lb-podium-name">{top3[1]?.name}</p>
-              <p className="lb-podium-blood">{top3[1]?.bloodGroup}</p>
-              <p className="lb-podium-donations">
-                {top3[1]?.donations} donations
-              </p>
-              <div className="lb-podium-stand second-stand">2nd</div>
-            </div>
+            )}
 
             {/* 1st Place */}
-            <div className="lb-podium-item first">
-              <div className="lb-podium-badge">🥇</div>
-              <div className="lb-podium-avatar gold">
-                {top3[0]?.name?.charAt(0)}
+            {top3[0] && (
+              <div className="lb-podium-item first">
+                <div className="lb-podium-badge">🥇</div>
+                <div className="lb-podium-avatar gold">{top3[0].name?.charAt(0)}</div>
+                <p className="lb-podium-name">{top3[0].name}</p>
+                <p className="lb-podium-blood">{top3[0].bloodGroup}</p>
+                <p className="lb-podium-city">📍 {top3[0].city}</p>
+                <p className="lb-podium-donations">{top3[0].donations} donations</p>
+                <p className="lb-podium-pts">{top3[0].points} pts</p>
+                <div className="lb-podium-stand first-stand">1st</div>
               </div>
-              <p className="lb-podium-name">{top3[0]?.name}</p>
-              <p className="lb-podium-blood">{top3[0]?.bloodGroup}</p>
-              <p className="lb-podium-donations">
-                {top3[0]?.donations} donations
-              </p>
-              <div className="lb-podium-stand first-stand">1st</div>
-            </div>
+            )}
 
             {/* 3rd Place */}
-            <div className="lb-podium-item third">
-              <div className="lb-podium-badge">🥉</div>
-              <div className="lb-podium-avatar">
-                {top3[2]?.name?.charAt(0)}
+            {top3[2] && (
+              <div className="lb-podium-item third">
+                <div className="lb-podium-badge">🥉</div>
+                <div className="lb-podium-avatar">{top3[2].name?.charAt(0)}</div>
+                <p className="lb-podium-name">{top3[2].name}</p>
+                <p className="lb-podium-blood">{top3[2].bloodGroup}</p>
+                <p className="lb-podium-city">📍 {top3[2].city}</p>
+                <p className="lb-podium-donations">{top3[2].donations} donations</p>
+                <p className="lb-podium-pts">{top3[2].points} pts</p>
+                <div className="lb-podium-stand third-stand">3rd</div>
               </div>
-              <p className="lb-podium-name">{top3[2]?.name}</p>
-              <p className="lb-podium-blood">{top3[2]?.bloodGroup}</p>
-              <p className="lb-podium-donations">
-                {top3[2]?.donations} donations
-              </p>
-              <div className="lb-podium-stand third-stand">3rd</div>
-            </div>
-
+            )}
           </div>
         )}
 
-        {/* City Filter */}
+        {/* ── City Filter ── */}
         <div className="lb-filters">
           {cities.map(city => (
             <button
@@ -175,7 +167,7 @@ const Leaderboard = () => {
           ))}
         </div>
 
-        {/* Blood Group Filter */}
+        {/* ── Blood Group Filter ── */}
         <div className="lb-blood-filters">
           <button
             className={`lb-blood-btn ${bloodFilter === '' ? 'active' : ''}`}
@@ -183,7 +175,7 @@ const Leaderboard = () => {
           >
             All
           </button>
-          {['A+','A-','B+','B-','AB+','AB-','O+','O-'].map(bg => (
+          {BLOOD_GROUPS.map(bg => (
             <button
               key={bg}
               className={`lb-blood-btn ${bloodFilter === bg ? 'active' : ''}`}
@@ -194,13 +186,36 @@ const Leaderboard = () => {
           ))}
         </div>
 
-        {/* Table */}
-        {loading ? (
+        {/* ── Error ── */}
+        {error && (
+          <div style={{ textAlign:'center', padding:'40px', color:'#e74c3c' }}>
+            ❌ {error}
+          </div>
+        )}
+
+        {/* ── Loading ── */}
+        {loading && (
           <div className="lb-loading">
             <div className="lb-spinner"></div>
             <p>Loading leaderboard...</p>
           </div>
-        ) : (
+        )}
+
+        {/* ── Empty ── */}
+        {!loading && !error && donors.length === 0 && (
+          <div className="lb-table-wrap" style={{ textAlign:'center', padding:'60px' }}>
+            <p style={{ fontSize:'48px' }}>🏆</p>
+            <p style={{ fontSize:'18px', fontWeight:700, color:'#333' }}>
+              No donors on leaderboard yet
+            </p>
+            <p style={{ color:'#aaa', marginTop:'8px' }}>
+              Complete blood donations to appear here!
+            </p>
+          </div>
+        )}
+
+        {/* ── Table ── */}
+        {!loading && !error && donors.length > 0 && (
           <div className="lb-table-wrap">
             <table className="lb-table">
               <thead>
@@ -211,16 +226,17 @@ const Leaderboard = () => {
                   <th>CITY</th>
                   <th>DONATIONS</th>
                   <th>POINTS</th>
+                  <th>LEVEL</th>
                   <th>ACHIEVEMENTS</th>
                 </tr>
               </thead>
               <tbody>
-                {filtered.map(donor => (
+                {donors.map(donor => (
                   <tr
-                    key={donor._id || donor.rank}
+                    key={donor._id}
                     className={donor.rank <= 3 ? 'top-row' : ''}
                     onClick={() => donor._id && navigate(`/donor/${donor._id}`)}
-                    style={{ cursor: donor._id ? 'pointer' : 'default' }}
+                    style={{ cursor: 'pointer' }}
                   >
                     <td className="lb-rank">
                       {donor.badge} {donor.rank}
@@ -230,24 +246,28 @@ const Leaderboard = () => {
                         {donor.name?.charAt(0)?.toUpperCase()}
                       </div>
                       {donor.name}
+                      {String(donor._id) === String(user?._id) && (
+                        <span style={{
+                          background:'#c0392b', color:'white',
+                          fontSize:'10px', padding:'2px 7px',
+                          borderRadius:'8px', marginLeft:'6px'
+                        }}>You</span>
+                      )}
                     </td>
                     <td>
-                      <span className="lb-blood-badge">
-                        {donor.bloodGroup}
-                      </span>
+                      <span className="lb-blood-badge">{donor.bloodGroup}</span>
                     </td>
                     <td>{donor.city || '—'}</td>
-                    <td className="lb-donations-col">
-                      {donor.donations}
-                    </td>
-                    <td className="lb-points-col">
-                      {donor.points}
+                    <td className="lb-donations-col">{donor.donations}</td>
+                    <td className="lb-points-col">{donor.points} pts</td>
+                    <td>
+                      <span style={{ color: donor.level?.color, fontWeight:700 }}>
+                        {donor.level?.icon} {donor.level?.label}
+                      </span>
                     </td>
                     <td>
                       {donor.achievement && (
-                        <span className="lb-achievement">
-                          {donor.achievement}
-                        </span>
+                        <span className="lb-achievement">{donor.achievement}</span>
                       )}
                     </td>
                   </tr>
@@ -257,28 +277,28 @@ const Leaderboard = () => {
           </div>
         )}
 
-        {/* How Points Work */}
+        {/* ── How Points Work ── */}
         <div className="lb-points-info">
           <h3>🌟 How Points Work</h3>
           <div className="lb-points-grid">
             <div className="lb-points-card">
               <span>🩸</span>
               <p><b>10 Points</b></p>
-              <p>Per Donation</p>
+              <p>Per Confirmed Donation</p>
             </div>
             <div className="lb-points-card">
-              <span>⚡</span>
-              <p><b>5 Points</b></p>
-              <p>Emergency Response</p>
+              <span>🥉</span>
+              <p><b>Bronze</b></p>
+              <p>10+ Points</p>
             </div>
             <div className="lb-points-card">
-              <span>📅</span>
-              <p><b>3 Points</b></p>
-              <p>Regular Donor Bonus</p>
+              <span>🥇</span>
+              <p><b>Gold</b></p>
+              <p>50+ Points</p>
             </div>
             <div className="lb-points-card">
-              <span>🏆</span>
-              <p><b>Gold Donor</b></p>
+              <span>👑</span>
+              <p><b>Platinum</b></p>
               <p>100+ Points</p>
             </div>
           </div>

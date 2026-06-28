@@ -17,6 +17,7 @@ export const updateDonorProfile = (data)   => API.put('/donors/me', data);
 export const getBloodRequests   = (params) => API.get('/requests', { params });
 export const postBloodRequest   = (data)   => API.post('/requests', data);
 export const closeBloodRequest  = (id)     => API.put(`/requests/${id}/close`);
+export const getMyRequests = () => API.get('/requests/my-requests');
 
 // ─── Responses ────────────────────────────────────────────
 export const respondToRequest   = (id, data) => API.post(`/responses/respond/${id}`, data);
@@ -69,3 +70,9 @@ export const getLeaderboard = (params) =>
   API.get('/leaderboard', { params });
 export const getMyRank = () =>
   API.get('/leaderboard/my-rank');
+
+// ── Donation Confirmation ───────────────────────────────────
+export const confirmDonation = (responseId, hospitalName) =>
+  API.post(`/donations/confirm/${responseId}`, { hospitalName });
+export const getPendingConfirmations = () =>
+  API.get('/donations/pending-confirmations');

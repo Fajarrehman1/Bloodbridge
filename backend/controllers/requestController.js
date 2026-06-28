@@ -62,3 +62,15 @@ exports.closeRequest = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// ── Get My Posted Requests (Receiver) — ALL statuses ────────
+exports.getMyRequests = async (req, res) => {
+  try {
+    const requests = await BloodRequest.find({ postedBy: req.user._id })
+      .populate('postedBy', 'name phone city')
+      .sort('-createdAt');
+    return res.json(requests);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
