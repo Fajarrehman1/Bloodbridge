@@ -30,10 +30,10 @@ exports.getLeaderboard = async (req, res) => {
       _id:         donor._id,
       name:        donor.name,
       bloodGroup:  donor.bloodGroup,
-      city:        donor.city       || '',
+      city:        donor.city        || '',
       available:   donor.available,
-      points:      donor.donationPoints || 0,
-      donations:   donor.totalDonations || 0,
+      points:      donor.donationPoints  || 0,
+      donations:   donor.totalDonations  || 0,
       level:       getLevel(donor.donationPoints || 0),
       badge:       i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '⭐',
       achievement: (donor.totalDonations || 0) >= 10 ? 'Gold Donor'    :
@@ -52,7 +52,7 @@ exports.getLeaderboard = async (req, res) => {
       { $match: { role: 'donor', donationPoints: { $gt: 0 } } },
       { $group: { _id: '$bloodGroup', count: { $sum: '$totalDonations' } } },
       { $match: { _id: { $ne: null } } },
-      { $sort:  { count: -1 } }
+      { $sort: { count: -1 } }
     ]);
 
     return res.json({
@@ -73,10 +73,11 @@ exports.getLeaderboard = async (req, res) => {
 
 exports.getMyRank = async (req, res) => {
   try {
-    const donor = await User.findById(req.user._id);
+    const donor    = await User.findById(req.user._id);
     if (!donor) return res.status(404).json({ message: 'User not found' });
 
-    const myPoints    = donor.donationPoints || 0;
+    const myPoints = donor.donationPoints || 0;
+
     const higherCount = await User.countDocuments({
       role:           'donor',
       donationPoints: { $gt: myPoints }
